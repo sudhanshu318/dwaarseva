@@ -16,7 +16,7 @@ menu.querySelectorAll("a").forEach((a) =>
 );
 
 // Booking form: client-side validation only.
-// TODO: connect to a backend or form service (e.g. email, Google Sheets, WhatsApp) to receive requests.
+const FORMSPREE_URL = "https://formspree.io/f/xdegagbk";
 const form = document.getElementById("booking-form");
 const status = document.getElementById("form-status");
 
@@ -41,7 +41,7 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  // Static hosting has no backend, so open a pre-filled WhatsApp message to the business.
+  // Send the request by email through Formspree (works on static hosting).
   const f = form.elements;
   const lines = [
     "New service request (Dwaarseva website)",
@@ -52,11 +52,36 @@ form.addEventListener("submit", (e) => {
     "Plan: " + f.plan.value,
   ];
   if (f.message.value.trim()) lines.push("Notes: " + f.message.value.trim());
+  const waUrl = "https://wa.me/919148702403?text=" + encodeURIComponent(lines.join("\n"));
 
-  const url = "https://wa.me/919148702403?text=" + encodeURIComponent(lines.join("\n"));
-  window.open(url, "_blank", "noopener");
+  const submitBtn = form.querySelector("button[type=submit]");
+  submitBtn.disabled = true;
+  status.className = "form-status";
+  status.textContent = "Sending...";
 
-  status.className = "form-status ok";
-  status.textContent = "Opening WhatsApp. Please press send there to complete your request.";
-  form.reset();
+  fetch(FORMSPREE_URL, {
+    method: "POST",
+    headers: { Accept: "application/json" },
+    body: new FormData(form),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Request failed");
+      status.className = "form-status ok";
+      status.textContent = "Thanks! We have received your request and will be in touch soon. ";
+      const link = document.createElement("a");
+      link.href = waUrl;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "Chat with us on WhatsApp";
+      status.appendChild(link);
+      form.reset();
+    })
+    .catch(() => {
+      status.className = "form-status error";
+      status.textContent =
+        "Could not send your request. Please call +91 91487 02403 or email dwaarseva@gmail.com.";
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+    });
 });
