@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Become a service provider | Dwaarseva</title>
+  <meta name="description" content="Join Dwaarseva as a maid, cook, driver or delivery partner. Steady work in apartment communities, fair pay and training." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand" aria-label="Dwaarseva home"><span class="brand-mark" aria-hidden="true">D</span>Dwaarseva</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <nav id="menu" class="menu" aria-label="Main">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="providers.html">Providers</a>
+        <a href="login.html" id="auth-link" class="btn btn-small btn-ghost">Login</a>
+        <a href="booking.html" class="btn btn-small">Book now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">For service providers</p>
+        <h1>Steady work, close to home.</h1>
+        <p class="lead">Join Dwaarseva and get regular work in apartment communities near you, with fair pay, training and support.</p>
+        <div class="cta-row">
+          <a href="#join" class="btn">Join as a provider</a>
+          <a href="#roles" class="btn btn-ghost">See roles</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="roles" class="section">
+      <div class="container">
+        <h2>Roles we hire for</h2>
+        <div class="cards">
+          <article class="card"><div class="icon" aria-hidden="true">🧹</div><h3>Maids</h3><p>Cleaning, utensils, laundry and housekeeping.</p></article>
+          <article class="card"><div class="icon" aria-hidden="true">🍳</div><h3>Cooks</h3><p>Daily, part-time and party cooking.</p></article>
+          <article class="card"><div class="icon" aria-hidden="true">🍲</div><h3>Home-made food makers</h3><p>Prepare fresh meals at home for neighbours.</p></article>
+          <article class="card"><div class="icon" aria-hidden="true">🚗</div><h3>Drivers</h3><p>Daily, outstation and on-demand driving.</p></article>
+          <article class="card"><div class="icon" aria-hidden="true">📦</div><h3>Delivery partners</h3><p>Groceries, parcels and errands in the community.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Why work with Dwaarseva</h2>
+        <div class="why-grid">
+          <div class="why"><h3>Regular work</h3><p>Daily, weekly and monthly engagements in your own neighbourhood.</p></div>
+          <div class="why"><h3>Fair, on-time pay</h3><p>Clear rates agreed up front, with no haggling.</p></div>
+          <div class="why"><h3>Free training</h3><p>Learn household standards, hygiene and customer etiquette.</p></div>
+          <div class="why"><h3>Respect and support</h3><p>A team to talk to if something goes wrong.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>How joining works</h2>
+        <ol class="steps">
+          <li><span class="step-n">1</span><div><h3>Apply</h3><p>Fill in the short form below.</p></div></li>
+          <li><span class="step-n">2</span><div><h3>Verification</h3><p>We check your identity and references. Do not send ID numbers through this form; we will ask for documents in person.</p></div></li>
+          <li><span class="step-n">3</span><div><h3>Training and start</h3><p>Complete a short orientation and begin taking jobs.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="join" class="section section-alt">
+      <div class="container contact-grid">
+        <div>
+          <h2>Join as a provider</h2>
+          <p class="section-sub">Tell us a little about yourself and our team will call you.</p>
+          <p>Questions? Call <a href="tel:+919148702403">+91 91487 02403</a>.</p>
+        </div>
+        <form id="join-form" class="form" novalidate>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+          <input type="hidden" name="_subject" value="New Dwaarseva provider application" />
+
+          <label for="p-name">Full name</label>
+          <input id="p-name" name="name" type="text" autocomplete="name" required />
+
+          <label for="p-phone">Phone number</label>
+          <input id="p-phone" name="phone" type="tel" autocomplete="tel" required />
+
+          <label for="p-role">Role</label>
+          <select id="p-role" name="role" required>
+            <option value="">Select a role</option>
+            <option>Maid</option>
+            <option>Cook</option>
+            <option>Home-made food maker</option>
+            <option>Driver</option>
+            <option>Delivery partner</option>
+            <option>Other</option>
+          </select>
+
+          <label for="p-exp">Years of experience</label>
+          <select id="p-exp" name="experience" required>
+            <option value="">Select</option>
+            <option>Fresher</option>
+            <option>1 to 3 years</option>
+            <option>3 to 5 years</option>
+            <option>5+ years</option>
+          </select>
+
+          <label for="p-area">Area or locality you live in</label>
+          <input id="p-area" name="area" type="text" required />
+
+          <label for="p-lang">Languages you speak</label>
+          <input id="p-lang" name="languages" type="text" placeholder="For example: Kannada, Hindi" />
+
+          <label for="p-avail">Availability</label>
+          <select id="p-avail" name="availability">
+            <option>Full time</option>
+            <option>Part time</option>
+            <option>Weekends only</option>
+          </select>
+
+          <label class="check"><input type="checkbox" name="consent" value="yes" required /> I agree that Dwaarseva may contact me about work and verify my details.</label>
+
+          <button type="submit" class="btn">Submit application</button>
+          <p id="j-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copy">&copy; <span id="year"></span> Dwaarseva. All rights reserved.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="common.js"></script>
+  <script src="providers.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

@@ -1,26 +1,9 @@
-// Footer year
-document.getElementById("year").textContent = new Date().getFullYear();
-
-// Mobile menu
-const toggle = document.querySelector(".nav-toggle");
-const menu = document.getElementById("menu");
-toggle.addEventListener("click", () => {
-  const open = menu.classList.toggle("open");
-  toggle.setAttribute("aria-expanded", String(open));
-});
-menu.querySelectorAll("a").forEach((a) =>
-  a.addEventListener("click", () => {
-    menu.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-  })
-);
-
-// Booking form: client-side validation only.
+// Quick-request form on the home page (year and menu are handled in common.js).
 const FORMSPREE_URL = "https://formspree.io/f/xdegagbk";
 const form = document.getElementById("booking-form");
 const status = document.getElementById("form-status");
 
-form.addEventListener("submit", (e) => {
+if (form) form.addEventListener("submit", (e) => {
   e.preventDefault();
   let valid = true;
   form.querySelectorAll("[required]").forEach((field) => {

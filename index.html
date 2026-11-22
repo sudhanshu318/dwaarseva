@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dwaarseva | Trusted home services for apartments and communities</title>
   <meta name="description" content="Dwaarseva connects households with trained, verified maids, cooks, drivers and delivery staff, plus home-made food and a neighbourhood buy-and-sell service." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dwaarseva | Trusted home services" />
+  <meta property="og:description" content="Verified maids, cooks, drivers and delivery staff for your apartment community." />
+  <meta property="og:url" content="https://dwaarseva.com/" />
+  <meta name="twitter:card" content="summary" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -22,11 +27,12 @@
         <span></span><span></span><span></span>
       </button>
       <nav id="menu" class="menu" aria-label="Main">
-        <a href="#services">Services</a>
-        <a href="#why">Why us</a>
-        <a href="#how">How it works</a>
-        <a href="#who">Who it's for</a>
-        <a href="#contact" class="btn btn-small">Book now</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#how">How it works</a>
+        <a href="providers.html">Providers</a>
+        <a href="login.html" id="auth-link" class="btn btn-small btn-ghost">Login</a>
+        <a href="booking.html" class="btn btn-small">Book now</a>
       </nav>
     </div>
   </header>
@@ -39,7 +45,7 @@
           <h1>Trusted help, right at your doorstep.</h1>
           <p class="lead">Dwaarseva is a one-stop home services provider for apartments and residential communities. Find verified, trained maids, cooks, drivers and delivery staff in one place.</p>
           <div class="cta-row">
-            <a href="#contact" class="btn">Book a service</a>
+            <a href="booking.html" class="btn">Book a service</a>
             <a href="#services" class="btn btn-ghost">Explore services</a>
           </div>
           <ul class="hero-points">
@@ -101,6 +107,65 @@
             <p>Need something else? Tell us and we will arrange it on request.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="container">
+        <h2>Pricing and plans</h2>
+        <p class="section-sub">Choose a plan that fits your routine. Longer plans cost less per visit.</p>
+        <!-- PLACEHOLDER prices: replace with your real rates. -->
+        <div class="plans">
+          <article class="plan">
+            <h3>Daily</h3>
+            <p class="price">₹399<span>/day</span></p>
+            <p class="plan-note">Pay as you go</p>
+            <ul>
+              <li>Book for the days you need</li>
+              <li>Verified, trained helper</li>
+              <li>Quick replacement</li>
+            </ul>
+            <a href="booking.html?plan=Daily" class="btn btn-ghost">Choose Daily</a>
+          </article>
+          <article class="plan">
+            <h3>Weekly</h3>
+            <p class="price">₹2,499<span>/week</span></p>
+            <p class="plan-note">Save about 10%</p>
+            <ul>
+              <li>Same helper all week</li>
+              <li>Flexible timing</li>
+              <li>Quick replacement</li>
+            </ul>
+            <a href="booking.html?plan=Weekly" class="btn btn-ghost">Choose Weekly</a>
+          </article>
+          <article class="plan plan-featured">
+            <p class="badge">Best value</p>
+            <h3>Monthly</h3>
+            <p class="price">₹8,999<span>/month</span></p>
+            <p class="plan-note">Save about 25%</p>
+            <ul>
+              <li>Dedicated helper</li>
+              <li>Priority replacement</li>
+              <li>Simple monthly billing</li>
+            </ul>
+            <a href="booking.html?plan=Monthly" class="btn">Choose Monthly</a>
+          </article>
+        </div>
+
+        <h3 class="table-title">Starting prices by service</h3>
+        <div class="table-wrap">
+          <table class="price-table">
+            <thead><tr><th scope="col">Service</th><th scope="col">Daily</th><th scope="col">Monthly</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Maid services</th><td>from ₹199</td><td>from ₹3,500</td></tr>
+              <tr><th scope="row">Cook</th><td>from ₹299</td><td>from ₹5,500</td></tr>
+              <tr><th scope="row">Home-made food</th><td>from ₹120 per meal</td><td>from ₹3,000</td></tr>
+              <tr><th scope="row">Driver</th><td>from ₹599</td><td>from ₹14,000</td></tr>
+              <tr><th scope="row">Delivery services</th><td>from ₹49 per trip</td><td>on request</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Sample prices shown for layout. Final prices are confirmed when you book.</p>
       </div>
     </section>
 
@@ -204,6 +269,20 @@
       <div>
         <a href="#home" class="brand"><span class="brand-mark" aria-hidden="true">D</span>Dwaarseva</a>
         <p>Reliable, affordable help at your doorstep.</p>
+        <div class="social" aria-label="Social media">
+          <a data-social="instagram" href="#">Instagram</a>
+          <a data-social="facebook" href="#">Facebook</a>
+          <a data-social="x" href="#">X</a>
+          <a data-social="linkedin" href="#">LinkedIn</a>
+          <a data-social="youtube" href="#">YouTube</a>
+        </div>
+        <button type="button" class="btn btn-small btn-ghost share-btn" data-share>Share this site</button>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <p><a href="booking.html">Book a service</a></p>
+        <p><a href="providers.html">Become a provider</a></p>
+        <p><a href="login.html">Login</a></p>
       </div>
       <div>
         <h3>Contact</h3>
@@ -214,6 +293,13 @@
     <p class="copy">&copy; <span id="year"></span> Dwaarseva. All rights reserved.</p>
   </footer>
 
+  <script src="config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="common.js"></script>
   <script src="script.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>

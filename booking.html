@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book a service | Dwaarseva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand" aria-label="Dwaarseva home"><span class="brand-mark" aria-hidden="true">D</span>Dwaarseva</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <nav id="menu" class="menu" aria-label="Main">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="providers.html">Providers</a>
+        <a href="login.html" id="auth-link" class="btn btn-small btn-ghost">Login</a>
+        <a href="booking.html" class="btn btn-small">Book now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="section">
+    <div class="container booking-wrap">
+      <h1 class="page-title">Book a service</h1>
+      <p class="section-sub">Three quick steps. <span id="login-hint"><a href="login.html?next=booking.html">Log in</a> to save your bookings and skip retyping your details.</span></p>
+
+      <ol class="progress" id="progress" aria-label="Progress">
+        <li class="on">Service</li><li>Schedule</li><li>Your details</li>
+      </ol>
+
+      <form id="book-form" class="form" novalidate>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="New Dwaarseva booking" />
+
+        <fieldset class="step" data-step="1">
+          <legend>1. What do you need?</legend>
+          <label for="b-service">Service</label>
+          <select id="b-service" name="service" required>
+            <option value="">Select a service</option>
+            <option>Maid services</option>
+            <option>Cook</option>
+            <option>Home-made food</option>
+            <option>Driver</option>
+            <option>Delivery services</option>
+            <option>Buy and sell</option>
+            <option>Other home services</option>
+          </select>
+          <label for="b-plan">Plan</label>
+          <select id="b-plan" name="plan" required>
+            <option>Daily</option>
+            <option>Weekly</option>
+            <option selected>Monthly</option>
+            <option>One-time</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="step" data-step="2" hidden>
+          <legend>2. When should we start?</legend>
+          <label for="b-date">Start date</label>
+          <input id="b-date" name="date" type="date" required />
+          <label for="b-slot">Preferred time</label>
+          <select id="b-slot" name="slot" required>
+            <option value="">Select a time slot</option>
+            <option>Morning (6am to 10am)</option>
+            <option>Late morning (10am to 1pm)</option>
+            <option>Afternoon (1pm to 5pm)</option>
+            <option>Evening (5pm to 9pm)</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="step" data-step="3" hidden>
+          <legend>3. Where and who?</legend>
+          <label for="b-name">Full name</label>
+          <input id="b-name" name="name" type="text" autocomplete="name" required />
+          <label for="b-phone">Phone number</label>
+          <input id="b-phone" name="phone" type="tel" autocomplete="tel" required />
+          <label for="b-community">Apartment or community</label>
+          <input id="b-community" name="community" type="text" required />
+          <label for="b-flat">Block and flat number</label>
+          <input id="b-flat" name="flat" type="text" required />
+          <label for="b-message">Anything else? (optional)</label>
+          <textarea id="b-message" name="message" rows="3"></textarea>
+          <div class="summary" id="summary" aria-live="polite"></div>
+        </fieldset>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" id="b-back" hidden>Back</button>
+          <button type="button" class="btn" id="b-next">Next</button>
+          <button type="submit" class="btn" id="b-submit" hidden>Confirm booking</button>
+        </div>
+        <p id="b-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <section id="history" class="history" hidden>
+        <h2>Your recent bookings</h2>
+        <ul id="history-list"></ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copy">&copy; <span id="year"></span> Dwaarseva. All rights reserved.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="common.js"></script>
+  <script src="booking.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

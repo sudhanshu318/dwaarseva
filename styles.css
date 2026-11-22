@@ -111,3 +111,79 @@ a { color: var(--brand); }
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* ---- Added features ---- */
+.btn[hidden], [hidden] { display: none !important; }
+.page-title { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.note { font-size: .85rem; color: var(--muted); margin-top: 1rem; }
+code { background: var(--alt); padding: .1rem .35rem; border-radius: 6px; }
+
+/* Pricing */
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.plan { position: relative; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; display: flex; flex-direction: column; }
+.plan-featured { border: 2px solid var(--brand); box-shadow: 0 16px 32px rgba(15,118,110,.14); }
+.badge { position: absolute; top: -.8rem; left: 1.5rem; margin: 0; background: var(--accent); color: #1f2937; font-weight: 600; font-size: .8rem; padding: .2rem .8rem; border-radius: 999px; }
+.price { font-family: "Fraunces", serif; font-size: 2.2rem; font-weight: 700; color: var(--brand-dark); margin: .25rem 0; }
+.price span { font-family: "Inter", sans-serif; font-size: 1rem; font-weight: 500; color: var(--muted); }
+.plan-note { color: var(--accent); font-weight: 600; color: #b45309; }
+.plan ul { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
+.plan li { padding: .3rem 0; }
+.plan li::before { content: "✓ "; color: var(--brand); font-weight: 700; }
+.plan .btn { text-align: center; }
+.table-title { margin-top: 2.5rem; }
+.table-wrap { overflow-x: auto; }
+.price-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+.price-table th, .price-table td { text-align: left; padding: .75rem 1rem; border-bottom: 1px solid var(--border); }
+.price-table thead th { background: var(--alt); }
+
+/* Auth */
+.auth-wrap { display: grid; place-items: center; }
+.auth-card { width: min(440px, 100%); background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 12px 28px rgba(0,0,0,.05); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 1rem; }
+.tab { padding: .6rem; border: 0; border-bottom: 3px solid var(--border); background: none; font: inherit; font-weight: 600; cursor: pointer; color: var(--muted); }
+.tab.active { border-color: var(--brand); color: var(--brand-dark); }
+.notice { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: .75rem 1rem; font-size: .9rem; }
+.form.flat { border: 0; box-shadow: none; padding: 0; }
+.form .btn + .btn { margin-top: .4rem; }
+
+/* Booking */
+.booking-wrap { max-width: 680px; }
+.progress { display: flex; gap: .5rem; list-style: none; padding: 0; margin: 0 0 1.25rem; }
+.progress li { flex: 1; text-align: center; padding: .5rem; border-bottom: 4px solid var(--border); color: var(--muted); font-weight: 600; font-size: .9rem; }
+.progress li.on { border-color: var(--brand); color: var(--brand-dark); }
+.step { border: 0; padding: 0; margin: 0; display: grid; gap: .4rem; }
+.step legend { font-family: "Fraunces", serif; font-size: 1.25rem; font-weight: 700; padding: 0; margin-bottom: .5rem; }
+.step-actions { display: flex; gap: .75rem; margin-top: 1rem; }
+.step-actions .btn { margin-top: 0; }
+.summary { background: var(--alt); border-radius: 10px; padding: 1rem; margin-top: 1rem; }
+.history { margin-top: 2rem; }
+.history ul { padding-left: 1.2rem; }
+.check { display: flex; gap: .5rem; align-items: flex-start; font-weight: 400 !important; }
+.form .check input { width: auto; margin-top: .3rem; }
+
+/* Footer extras */
+.social { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+.social a { color: #fff; border: 1px solid rgba(255,255,255,.35); padding: .25rem .75rem; border-radius: 999px; text-decoration: none; font-size: .9rem; }
+.social a:hover { background: rgba(255,255,255,.12); }
+.site-footer a { color: #99f6e4; }
+.share-btn { margin-top: .5rem; }
+
+/* Floating buttons */
+.fab { position: fixed; right: 1rem; z-index: 60; border: 0; border-radius: 999px; padding: .75rem 1.1rem; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+.fab-chat { bottom: 1rem; background: var(--brand); color: #fff; }
+.fab-wa { bottom: 4.5rem; background: #25d366; color: #0b2b29; }
+
+/* Chat */
+.chat { position: fixed; right: 1rem; bottom: 8rem; z-index: 70; width: min(360px, calc(100vw - 2rem)); height: min(480px, 70vh); background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,.2); display: flex; flex-direction: column; overflow: hidden; }
+.chat-head { display: flex; justify-content: space-between; align-items: center; background: var(--brand); color: #fff; padding: .75rem 1rem; font-weight: 600; }
+.chat-head button { background: none; border: 0; color: #fff; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.chat-log { flex: 1; overflow-y: auto; padding: .75rem; display: flex; flex-direction: column; gap: .5rem; }
+.msg { max-width: 85%; padding: .55rem .8rem; border-radius: 14px; font-size: .95rem; display: flex; flex-direction: column; gap: .35rem; }
+.msg.bot { background: var(--alt); align-self: flex-start; }
+.msg.user { background: var(--brand); color: #fff; align-self: flex-end; }
+.msg a { font-weight: 600; }
+.chat-quick { display: flex; flex-wrap: wrap; gap: .4rem; padding: .5rem .75rem; border-top: 1px solid var(--border); }
+.chat-quick button { border: 1px solid var(--brand); background: #fff; color: var(--brand-dark); border-radius: 999px; padding: .25rem .7rem; font: inherit; font-size: .85rem; cursor: pointer; }
+.chat-form { display: flex; gap: .5rem; padding: .6rem; border-top: 1px solid var(--border); }
+.chat-form input { flex: 1; padding: .55rem .7rem; border: 1px solid #b8c4c2; border-radius: 10px; font: inherit; }
+.chat-form button { background: var(--brand); color: #fff; border: 0; border-radius: 10px; padding: 0 1rem; font: inherit; font-weight: 600; cursor: pointer; }
