@@ -18,6 +18,10 @@ window.DWAARSEVA = {
     youtube: "https://youtube.com/@dwaarseva",
   },
 
+  // These accounts can open admin.html. Must match the Firestore rules in SETUP.md.
+  // To add another admin later, add it to this list AND to the isAdmin() rule in Firestore.
+  adminEmails: ["dwaarseva@gmail.com"],
+
   whatsapp: "919148702403",
   phone: "+91 91487 02403",
   email: "dwaarseva@gmail.com",

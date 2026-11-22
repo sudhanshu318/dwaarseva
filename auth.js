@@ -42,21 +42,56 @@
   api.reset = (email) => auth.sendPasswordResetEmail(email);
   api.signOut = () => auth.signOut();
 
-  // Saved under the signed-in user. Firestore rules should restrict access to the owner.
+  // All bookings live in one top-level collection. Firestore rules (see SETUP.md) let
+  // owners read their own bookings and let only the admin email read or change all of them.
+  const adminEmails = [].concat((window.DWAARSEVA || {}).adminEmails || []).map((e) => String(e).toLowerCase());
+  api.isAdmin = (u) => !!u && !!u.email && u.emailVerified && adminEmails.includes(u.email.toLowerCase());
+  const ts = (b) => (b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : Date.now());
+
   api.saveBooking = (data) =>
-    db.collection("users").doc(api.user.uid).collection("bookings").add({
+    db.collection("bookings").add({
       ...data,
+      uid: api.user.uid,
+      email: api.user.email || "",
       status: "requested",
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
   api.listBookings = async () => {
-    const snap = await db.collection("users").doc(api.user.uid).collection("bookings").orderBy("createdAt", "desc").limit(20).get();
-    return snap.docs.map((d) => d.data());
+    const snap = await db.collection("bookings").where("uid", "==", api.user.uid).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() })).sort((a, b) => ts(b) - ts(a)).slice(0, 20);
   };
+  // Owner edits: only these fields can change (enforced by Firestore rules).
+  const EDITABLE = ["plan", "date", "slot", "community", "flat", "message"];
+  api.updateMyBooking = (id, fields) => {
+    const clean = {};
+    EDITABLE.forEach((k) => { if (k in fields) clean[k] = fields[k]; });
+    clean.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+    return db.collection("bookings").doc(id).update(clean);
+  };
+  api.cancelMyBooking = (id) =>
+    db.collection("bookings").doc(id).update({
+      status: "cancelled",
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  // Admin only (enforced by Firestore rules).
+  api.listAllBookings = async () => {
+    const snap = await db.collection("bookings").orderBy("createdAt", "desc").limit(500).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  };
+  api.updateBookingStatus = (id, status) => db.collection("bookings").doc(id).update({ status });
 
   auth.onAuthStateChanged((user) => {
     api.user = user;
     paintHeader(user);
+    const old = document.getElementById("admin-link");
+    if (old) old.remove();
+    if (api.isAdmin(user) && authLink) {
+      const a = document.createElement("a");
+      a.id = "admin-link";
+      a.href = "admin.html";
+      a.textContent = "Admin";
+      authLink.parentNode.insertBefore(a, authLink);
+    }
     listeners.forEach((cb) => cb(user));
   });
 })();

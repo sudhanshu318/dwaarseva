@@ -10,12 +10,42 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{db}/documents {
-    match /users/{uid}/bookings/{id} {
-      allow read, create: if request.auth != null && request.auth.uid == uid;
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['dwaarseva@gmail.com']
+        && request.auth.token.email_verified == true;
+    }
+    match /bookings/{id} {
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'requested';
+      allow read: if request.auth != null
+        && (resource.data.uid == request.auth.uid || isAdmin());
+      // Admin: may change the status only.
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      // Owner: may edit details or cancel, while the booking is open.
+      allow update: if request.auth != null
+        && resource.data.uid == request.auth.uid
+        && resource.data.status in ['requested', 'confirmed']
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['plan', 'date', 'slot', 'community', 'flat', 'message', 'status', 'updatedAt'])
+        && (request.resource.data.status == resource.data.status
+            || request.resource.data.status == 'cancelled');
+      allow delete: if false;
     }
   }
 }
 ```
+
+## Admin page
+`admin.html` lists every booking for the accounts in `adminEmails` in `config.js`.
+Log in with one of those accounts, then open `/admin.html` (an "Admin" link also appears in the menu).
+If you change the admin emails, change them in both `config.js` and the `isAdmin()` rule above.
+
+## Customer changes
+Signed-in customers can edit or cancel their own open bookings from `booking.html` ("Your recent bookings").
+The team gets a Formspree email whenever a booking is changed or cancelled.
 5. Copy the web app config values into `config.js` (`apiKey`, `authDomain`, `projectId`, `appId`).
    These keys are meant to be public; the rules above protect the data.
 

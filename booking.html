@@ -100,6 +100,27 @@
       <section id="history" class="history" hidden>
         <h2>Your recent bookings</h2>
         <ul id="history-list"></ul>
+
+        <form id="edit-form" class="form" hidden novalidate>
+          <h3>Change booking</h3>
+          <label for="e-plan">Plan</label>
+          <select id="e-plan" name="plan"></select>
+          <label for="e-date">Start date</label>
+          <input id="e-date" name="date" type="date" />
+          <label for="e-slot">Preferred time</label>
+          <select id="e-slot" name="slot"></select>
+          <label for="e-community">Apartment or community</label>
+          <input id="e-community" name="community" type="text" />
+          <label for="e-flat">Block and flat number</label>
+          <input id="e-flat" name="flat" type="text" />
+          <label for="e-message">Notes</label>
+          <textarea id="e-message" name="message" rows="3"></textarea>
+          <div class="step-actions">
+            <button type="submit" class="btn">Save changes</button>
+            <button type="button" class="btn btn-ghost" id="e-close">Close</button>
+          </div>
+          <p id="e-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </div>
   </main>

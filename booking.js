@@ -74,17 +74,100 @@
     if (user) {
       hint.textContent = "Signed in as " + (user.displayName || user.email) + ".";
       if (!form.elements.name.value) form.elements.name.value = user.displayName || "";
-      try {
-        const list = await A.listBookings();
-        const ul = document.getElementById("history-list");
-        ul.textContent = "";
-        list.forEach((b) => {
-          const li = document.createElement("li");
-          li.textContent = b.service + " (" + b.plan + "), starts " + b.date + ", " + b.slot + ". Status: " + b.status;
-          ul.appendChild(li);
-        });
-        document.getElementById("history").hidden = list.length === 0;
-      } catch (_) { /* history is optional */ }
+      loadHistory();
+    }
+  });
+
+  // ---- My bookings: view, edit, cancel ----
+  const editForm = document.getElementById("edit-form");
+  const editStatus = document.getElementById("e-status");
+  let editing = null;
+
+  function notifyTeam(subject, b, extra) {
+    const body = {
+      _subject: subject,
+      message: [subject, "Service: " + b.service, "Name: " + b.name, "Phone: " + b.phone, "Email: " + (A.user && A.user.email || ""), extra].filter(Boolean).join("\n"),
+    };
+    fetch(C.formspree, { method: "POST", headers: { Accept: "application/json", "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => {});
+  }
+
+  function btn(label, onClick, cls) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn-small " + (cls || "btn-ghost");
+    b.textContent = label;
+    b.addEventListener("click", onClick);
+    return b;
+  }
+
+  async function loadHistory() {
+    const ul = document.getElementById("history-list");
+    try {
+      const list = await A.listBookings();
+      ul.textContent = "";
+      list.forEach((b) => {
+        const li = document.createElement("li");
+        const t = document.createElement("span");
+        t.textContent = b.service + " (" + b.plan + "), starts " + b.date + ", " + b.slot + ". Status: " + b.status + ". ";
+        li.appendChild(t);
+        if (b.status === "requested" || b.status === "confirmed") {
+          li.appendChild(btn("Edit", () => startEdit(b)));
+          li.appendChild(btn("Cancel booking", () => cancelBooking(b)));
+        }
+        ul.appendChild(li);
+      });
+      document.getElementById("history").hidden = list.length === 0;
+    } catch (_) { /* history is optional */ }
+  }
+
+  function startEdit(b) {
+    editing = b;
+    const f = editForm.elements;
+    // Reuse the option lists from the main booking form.
+    ["plan", "slot"].forEach((n) => {
+      f[n].textContent = "";
+      [...form.elements[n].options].filter((o) => o.value !== "").forEach((o) => f[n].appendChild(new Option(o.text, o.value)));
+    });
+    f.date.min = form.elements.date.min;
+    f.plan.value = b.plan; f.date.value = b.date; f.slot.value = b.slot;
+    f.community.value = b.community || ""; f.flat.value = b.flat || ""; f.message.value = b.message || "";
+    editStatus.textContent = "";
+    editForm.hidden = false;
+    f.plan.focus();
+  }
+
+  async function cancelBooking(b) {
+    if (!confirm("Cancel this booking?")) return;
+    try {
+      await A.cancelMyBooking(b.id);
+      notifyTeam("Booking CANCELLED by customer", b, "Was: " + b.date + ", " + b.slot);
+      loadHistory();
+    } catch (_) { alert("Could not cancel. Please call " + C.phone + "."); }
+  }
+
+  document.getElementById("e-close").addEventListener("click", () => { editForm.hidden = true; editing = null; });
+
+  editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = editForm.elements;
+    if (!editing || !f.date.value || !f.community.value.trim() || !f.flat.value.trim()) {
+      editStatus.className = "form-status error";
+      editStatus.textContent = "Please fill in date, community and flat number.";
+      return;
+    }
+    const fields = {
+      plan: f.plan.value, date: f.date.value, slot: f.slot.value,
+      community: f.community.value.trim(), flat: f.flat.value.trim(), message: f.message.value.trim(),
+    };
+    try {
+      await A.updateMyBooking(editing.id, fields);
+      notifyTeam("Booking CHANGED by customer", editing, "New: " + fields.plan + ", " + fields.date + ", " + fields.slot + ", " + fields.community + " " + fields.flat);
+      editForm.hidden = true;
+      editing = null;
+      loadHistory();
+    } catch (_) {
+      editStatus.className = "form-status error";
+      editStatus.textContent = "Could not save changes. This booking may no longer be editable.";
     }
   });
 
@@ -112,7 +195,7 @@
     fetch(C.formspree, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(form) })
       .then((res) => {
         if (!res.ok) throw new Error("failed");
-        if (A.user && A.saveBooking) A.saveBooking(data).catch(() => {});
+        if (A.user && A.saveBooking) A.saveBooking(data).then(loadHistory).catch(() => {});
         status.className = "form-status ok";
         status.textContent = "Booking received. We will confirm shortly. ";
         const link = document.createElement("a");
