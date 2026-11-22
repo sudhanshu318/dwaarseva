@@ -3,10 +3,10 @@ window.DWAARSEVA = {
   // Create a free project at https://console.firebase.google.com, add a Web app,
   // enable Authentication (Email/Password + Google) and Firestore, then paste the config here.
   firebase: {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID",
+    apiKey: "AIzaSyDsl_uRtbGAktQGHNPY4dHmo7g1NWXpEFQ",
+    authDomain: "dwaarseva-3afef.firebaseapp.com",
+    projectId: "dwaarseva-3afef",
+    appId: "1:63764010622:web:a3277753fdaeb938a26a2f",
   },
 
   // PLACEHOLDER social profiles: replace with your real URLs.
