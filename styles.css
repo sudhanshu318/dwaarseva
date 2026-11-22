@@ -34,6 +34,12 @@ a { color: var(--brand); }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand { display: inline-flex; align-items: center; gap: .6rem; font-family: "Fraunces", serif; font-weight: 700; font-size: 1.4rem; color: var(--brand-dark); text-decoration: none; }
+.brand-logo { width: 40px; height: 40px; border-radius: 10px; flex: none; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+.brand-tag { display: none; max-width: 300px; font-family: "Inter", sans-serif; font-weight: 500; font-size: .62rem; line-height: 1.25; letter-spacing: .01em; color: var(--muted); margin-top: 2px; }
+.site-header .brand-tag { display: block; }
+.site-footer .brand-tag { display: block; color: #99f6e4; }
+@media (max-width: 700px) { .site-header .brand-tag { display: none; } }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--brand); color: #fff; font-size: 1.2rem; }
 .menu { display: flex; align-items: center; gap: 1.5rem; }
 .menu a { color: var(--ink); text-decoration: none; font-weight: 500; }
@@ -187,3 +193,11 @@ code { background: var(--alt); padding: .1rem .35rem; border-radius: 6px; }
 .chat-form { display: flex; gap: .5rem; padding: .6rem; border-top: 1px solid var(--border); }
 .chat-form input { flex: 1; padding: .55rem .7rem; border: 1px solid #b8c4c2; border-radius: 10px; font: inherit; }
 .chat-form button { background: var(--brand); color: #fff; border: 0; border-radius: 10px; padding: 0 1rem; font: inherit; font-weight: 600; cursor: pointer; }
+
+/* Admin */
+.ad-tools { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0 .5rem; }
+.ad-tools input, .ad-tools select { padding: .55rem .7rem; border: 1px solid #b8c4c2; border-radius: 10px; font: inherit; background: #fff; }
+.ad-tools input { flex: 1; min-width: 220px; }
+.admin-table { font-size: .9rem; min-width: 900px; }
+.admin-table td { vertical-align: top; }
+.admin-table select { padding: .3rem; border-radius: 8px; border: 1px solid #b8c4c2; font: inherit; }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin | Dwaarseva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand" aria-label="Dwaarseva home"><img class="brand-logo" src="logo.svg" alt="" width="40" height="40" /><span class="brand-text">Dwaarseva<small class="brand-tag">Seva at your doorstep with reliable people. Trusted Service. Peace of Mind.</small></span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <nav id="menu" class="menu" aria-label="Main">
+        <a href="index.html#services">Services</a>
+        <a href="providers.html">Providers</a>
+        <a href="login.html" id="auth-link" class="btn btn-small btn-ghost">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="section">
+    <div class="container">
+      <h1 class="page-title">Admin: bookings</h1>
+      <p id="ad-msg" class="form-status" role="status" aria-live="polite">Checking access...</p>
+
+      <div id="ad-panel" hidden>
+        <div class="ad-tools">
+          <input id="ad-search" type="search" placeholder="Search name, phone, email, community" aria-label="Search bookings" />
+          <select id="ad-filter" aria-label="Filter by status">
+            <option value="">All statuses</option>
+            <option>requested</option>
+            <option>confirmed</option>
+            <option>completed</option>
+            <option>cancelled</option>
+          </select>
+          <button type="button" class="btn btn-small btn-ghost" id="ad-refresh">Refresh</button>
+          <button type="button" class="btn btn-small" id="ad-csv">Export CSV</button>
+        </div>
+        <p id="ad-count" class="note"></p>
+        <div class="table-wrap">
+          <table class="price-table admin-table">
+            <thead>
+              <tr>
+                <th scope="col">Received</th><th scope="col">Customer</th><th scope="col">Contact</th>
+                <th scope="col">Service</th><th scope="col">Start</th><th scope="col">Address</th>
+                <th scope="col">Notes</th><th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="ad-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copy">&copy; <span id="year"></span> Dwaarseva. All rights reserved.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="common.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
