@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <title>Provider dashboard | Dwaarseva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-login="provider-login.html">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand" aria-label="Dwaarseva home"><img class="brand-logo" src="logo.svg" alt="" width="58" height="58" /><span class="brand-text">Dwaarseva<small class="brand-tag">Seva at your doorstep with reliable people. Trusted Service. Peace of Mind.</small></span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <nav id="menu" class="menu" aria-label="Main">
+        <a href="providers.html">Providers</a>
+        <a href="provider-login.html" id="auth-link" class="btn btn-small btn-ghost">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="section">
+    <div class="container pv-wrap">
+      <h1 class="page-title">Provider dashboard</h1>
+      <p id="pv-msg" class="form-status" role="status" aria-live="polite">Loading...</p>
+
+      <div id="pv-panel" hidden>
+        <section class="pv-card pv-status" aria-label="Your status">
+          <img id="pv-photo-view" class="pv-photo" alt="Your photo" width="96" height="96" hidden />
+          <div class="pv-status-main">
+            <h2 id="pv-name">Your profile</h2>
+            <p id="pv-verify" class="pv-badge">Not verified</p>
+            <label class="switch">
+              <input type="checkbox" id="pv-active" disabled />
+              <span class="switch-ui" aria-hidden="true"></span>
+              <span id="pv-active-text">Inactive</span>
+            </label>
+            <p id="pv-active-help" class="note"></p>
+          </div>
+          <dl class="pv-stats">
+            <div><dt>Rating</dt><dd id="pv-rating">0.0 / 5</dd></div>
+            <div><dt>Services provided</dt><dd id="pv-count">0</dd></div>
+          </dl>
+        </section>
+
+        <section class="pv-card" aria-labelledby="pv-profile-h">
+          <h2 id="pv-profile-h">Your profile</h2>
+          <p class="note">Your ID and bank details are visible only to you and the Dwaarseva admin team.</p>
+          <form id="pv-form" class="form flat" novalidate>
+            <label for="pv-f-name">Full name</label>
+            <input id="pv-f-name" name="name" type="text" autocomplete="name" required />
+
+            <label for="pv-f-phone">Phone number</label>
+            <input id="pv-f-phone" name="phone" type="tel" autocomplete="tel" required />
+
+            <label for="pv-f-address">Address</label>
+            <textarea id="pv-f-address" name="address" rows="3" required></textarea>
+
+            <label for="pv-f-service">Service you provide</label>
+            <select id="pv-f-service" name="service" required>
+              <option value="">Select a service</option>
+              <option>Maid services</option>
+              <option>Cook</option>
+              <option>Home-made food</option>
+              <option>Driver</option>
+              <option>Delivery services</option>
+              <option>Other home services</option>
+            </select>
+
+            <label for="pv-f-photo">Photo</label>
+            <input id="pv-f-photo" type="file" accept="image/*" />
+            <img id="pv-photo-prev" class="pv-photo" alt="Photo preview" width="96" height="96" hidden />
+
+            <label for="pv-f-details">Additional details, pricing or quotation</label>
+            <textarea id="pv-f-details" name="details" rows="5" maxlength="1000" placeholder="For example: experience, languages, areas you serve, your rates (₹ per visit or per month), or a quotation for a job"></textarea>
+            <p class="note">Up to 1000 characters. The Dwaarseva team can see this.</p>
+
+            <h3 class="pv-sub">ID details</h3>
+            <label for="pv-f-pan">PAN number</label>
+            <input id="pv-f-pan" name="pan" type="text" maxlength="10" autocapitalize="characters" placeholder="ABCDE1234F" />
+
+            <label for="pv-f-aadhaar">Aadhaar: last 4 digits only</label>
+            <input id="pv-f-aadhaar" name="aadhaarLast4" type="text" inputmode="numeric" maxlength="4" placeholder="1234" />
+            <p class="note">Please do not enter your full Aadhaar number. The team will check your Aadhaar document in person.</p>
+
+            <h3 class="pv-sub">Payment details</h3>
+            <label for="pv-f-holder">Account holder name</label>
+            <input id="pv-f-holder" name="accountHolder" type="text" />
+
+            <label for="pv-f-bank">Bank name</label>
+            <input id="pv-f-bank" name="bankName" type="text" />
+
+            <label for="pv-f-acc">Account number</label>
+            <input id="pv-f-acc" name="accountNumber" type="text" inputmode="numeric" maxlength="18" />
+
+            <label for="pv-f-ifsc">IFSC code</label>
+            <input id="pv-f-ifsc" name="ifsc" type="text" maxlength="11" autocapitalize="characters" placeholder="SBIN0001234" />
+
+            <label for="pv-f-upi">UPI ID</label>
+            <input id="pv-f-upi" name="upi" type="text" placeholder="name@bank" />
+
+            <button type="submit" class="btn" id="pv-save">Save profile</button>
+            <p id="pv-status" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="pv-card" aria-labelledby="pv-att-h">
+          <h2 id="pv-att-h">Attachments</h2>
+          <p class="note">Attach a quotation, price list, certificate or work photos. Images and PDFs only, up to 5 files (PDF under 600 KB).</p>
+          <p id="pv-att-note" class="note"></p>
+          <input id="pv-att-file" type="file" accept="image/*,application/pdf" />
+          <p id="pv-att-status" class="form-status" role="status" aria-live="polite"></p>
+          <ul id="pv-att-list" class="att-list"></ul>
+        </section>
+
+        <section class="pv-card" aria-labelledby="pv-pay-h">
+          <h2 id="pv-pay-h">Payments received</h2>
+          <p id="pv-pay-total" class="note"></p>
+          <div class="table-wrap">
+            <table class="price-table">
+              <thead><tr><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Service</th><th scope="col">Amount</th><th scope="col">Note</th></tr></thead>
+              <tbody id="pv-pay-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copy">&copy; <span id="year"></span> Dwaarseva. All rights reserved.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="auth.js"></script>
+  <script src="attach.js"></script>
+  <script src="common.js"></script>
+  <script src="provider.js"></script>
+</body>
+</html>

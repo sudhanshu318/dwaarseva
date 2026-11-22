@@ -21,7 +21,7 @@
       authLink.onclick = (e) => { e.preventDefault(); api.signOut().then(() => (location.href = "index.html")); };
     } else {
       authLink.textContent = "Login";
-      authLink.href = "login.html";
+      authLink.href = document.body.dataset.login || "login.html";
       authLink.onclick = null;
     }
   }
@@ -79,6 +79,64 @@
     return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
   };
   api.updateBookingStatus = (id, status) => db.collection("bookings").doc(id).update({ status });
+
+  // ---- Service providers ----
+  // providers/{uid}            profile. Providers edit PROFILE_FIELDS and "active" (only once verified).
+  //                            verified, aadhaarVerified, rating, servicesCount are admin-only.
+  // providers/{uid}/payments   payment records added by the admin; the provider can read them.
+  const SV = () => firebase.firestore.FieldValue.serverTimestamp();
+  const PROFILE_FIELDS = ["name", "phone", "address", "service", "details", "pan", "aadhaarLast4",
+    "accountHolder", "accountNumber", "ifsc", "bankName", "upi", "photo"];
+  const pick = (src, keys) => { const o = {}; keys.forEach((k) => { if (k in src) o[k] = src[k]; }); return o; };
+
+  api.getProvider = async () => {
+    const d = await db.collection("providers").doc(api.user.uid).get();
+    return d.exists ? { id: d.id, ...d.data() } : null;
+  };
+  api.createProvider = (data) =>
+    db.collection("providers").doc(api.user.uid).set({
+      ...pick(data, PROFILE_FIELDS),
+      uid: api.user.uid,
+      email: api.user.email || "",
+      verified: false,
+      aadhaarVerified: false,
+      active: false,
+      rating: 0,
+      servicesCount: 0,
+      createdAt: SV(),
+      updatedAt: SV(),
+    });
+  api.updateProvider = (data) =>
+    db.collection("providers").doc(api.user.uid).update({ ...pick(data, PROFILE_FIELDS), updatedAt: SV() });
+  api.setProviderActive = (active) =>
+    db.collection("providers").doc(api.user.uid).update({ active: !!active, updatedAt: SV() });
+  api.listMyPayments = async () => {
+    const snap = await db.collection("providers").doc(api.user.uid).collection("payments").orderBy("createdAt", "desc").limit(200).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  };
+  // Attachments (images or PDFs stored as data URLs). uid defaults to the signed-in provider.
+  const attCol = (uid) => db.collection("providers").doc(uid || api.user.uid).collection("attachments");
+  api.listAttachments = async (uid) => {
+    const snap = await attCol(uid).orderBy("createdAt", "desc").limit(20).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  };
+  api.addAttachment = (a) =>
+    attCol().add({ name: a.name, type: a.type, size: a.size, data: a.data, createdAt: SV() });
+  api.deleteAttachment = (id, uid) => attCol(uid).doc(id).delete();
+
+  // Admin only (enforced by Firestore rules).
+  api.listProviders = async () => {
+    const snap = await db.collection("providers").orderBy("createdAt", "desc").limit(500).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  };
+  api.adminUpdateProvider = (uid, fields) =>
+    db.collection("providers").doc(uid).update({ ...fields, updatedAt: SV() });
+  api.adminAddPayment = (uid, p) =>
+    db.collection("providers").doc(uid).collection("payments").add({ ...p, createdAt: SV() });
+  api.adminListPayments = async (uid) => {
+    const snap = await db.collection("providers").doc(uid).collection("payments").orderBy("createdAt", "desc").limit(200).get();
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  };
 
   auth.onAuthStateChanged((user) => {
     api.user = user;

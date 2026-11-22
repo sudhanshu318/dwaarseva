@@ -15,7 +15,7 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container nav">
-      <a href="index.html" class="brand" aria-label="Dwaarseva home"><img class="brand-logo" src="logo.svg" alt="" width="40" height="40" /><span class="brand-text">Dwaarseva<small class="brand-tag">Seva at your doorstep with reliable people. Trusted Service. Peace of Mind.</small></span></a>
+      <a href="index.html" class="brand" aria-label="Dwaarseva home"><img class="brand-logo" src="logo.svg" alt="" width="58" height="58" /><span class="brand-text">Dwaarseva<small class="brand-tag">Seva at your doorstep with reliable people. Trusted Service. Peace of Mind.</small></span></a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Toggle menu"><span></span><span></span><span></span></button>
       <nav id="menu" class="menu" aria-label="Main">
         <a href="index.html#services">Services</a>
@@ -31,6 +31,11 @@
       <p id="ad-msg" class="form-status" role="status" aria-live="polite">Checking access...</p>
 
       <div id="ad-panel" hidden>
+        <div class="tabs ad-tabs" role="tablist">
+          <button type="button" role="tab" id="tab-bookings" class="tab active" aria-selected="true">Bookings</button>
+          <button type="button" role="tab" id="tab-providers" class="tab" aria-selected="false">Providers</button>
+        </div>
+      <div id="ad-bookings">
         <div class="ad-tools">
           <input id="ad-search" type="search" placeholder="Search name, phone, email, community" aria-label="Search bookings" />
           <select id="ad-filter" aria-label="Filter by status">
@@ -57,6 +62,67 @@
           </table>
         </div>
       </div>
+
+      <div id="ad-providers" hidden>
+        <div class="ad-tools">
+          <input id="pr-search" type="search" placeholder="Search name, phone, email" aria-label="Search providers" />
+          <select id="pr-service" aria-label="Filter by service">
+            <option value="">All services</option>
+            <option>Maid services</option><option>Cook</option><option>Home-made food</option>
+            <option>Driver</option><option>Delivery services</option><option>Other home services</option>
+          </select>
+          <select id="pr-filter" aria-label="Filter providers">
+            <option value="">All providers</option>
+            <option value="available">Available now (verified and active)</option>
+            <option value="pending">Waiting for verification</option>
+            <option value="inactive">Verified but inactive</option>
+          </select>
+          <button type="button" class="btn btn-small btn-ghost" id="pr-refresh">Refresh</button>
+        </div>
+        <p id="pr-count" class="note"></p>
+        <p id="pr-msg" class="form-status" role="status" aria-live="polite"></p>
+        <div class="table-wrap">
+          <table class="price-table admin-table">
+            <thead>
+              <tr>
+                <th scope="col">Photo</th><th scope="col">Provider</th><th scope="col">Service</th>
+                <th scope="col">Verified</th><th scope="col">Aadhaar checked</th><th scope="col">Active</th>
+                <th scope="col">Rating (0-5)</th><th scope="col">Services done</th><th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pr-body"></tbody>
+          </table>
+        </div>
+
+        <section id="pr-detail" class="pv-card" hidden aria-live="polite">
+          <h2 id="pr-d-title">Provider details</h2>
+          <dl id="pr-d-list" class="pr-dl"></dl>
+          <h3>Attachments</h3>
+          <ul id="pr-att-list" class="att-list"></ul>
+          <h3>Payments</h3>
+          <form id="pr-pay-form" class="pr-pay" novalidate>
+            <input name="amount" type="number" min="1" step="0.01" placeholder="Amount (₹)" aria-label="Amount" required />
+            <input name="date" type="date" aria-label="Date" required />
+            <input name="time" type="time" aria-label="Time" required />
+            <select name="service" aria-label="Service type" required>
+              <option value="">Service type</option>
+              <option>Maid services</option><option>Cook</option><option>Home-made food</option>
+              <option>Driver</option><option>Delivery services</option><option>Other home services</option>
+            </select>
+            <input name="note" type="text" placeholder="Note (optional)" aria-label="Note" />
+            <button type="submit" class="btn btn-small">Add payment</button>
+          </form>
+          <p id="pr-pay-status" class="form-status" role="status" aria-live="polite"></p>
+          <div class="table-wrap">
+            <table class="price-table">
+              <thead><tr><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Service</th><th scope="col">Amount</th><th scope="col">Note</th></tr></thead>
+              <tbody id="pr-pay-body"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-small btn-ghost" id="pr-d-close">Close</button>
+        </section>
+      </div>
+      </div>
     </div>
   </main>
 
@@ -69,7 +135,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="auth.js"></script>
+  <script src="attach.js"></script>
   <script src="common.js"></script>
   <script src="admin.js"></script>
+  <script src="admin-providers.js"></script>
 </body>
 </html>
