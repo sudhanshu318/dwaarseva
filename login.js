@@ -9,7 +9,7 @@
 
   // Only allow redirects to pages on this site.
   const nextParam = new URLSearchParams(location.search).get("next");
-  const next = nextParam && /^[a-z0-9_-]+\.html$/i.test(nextParam) ? nextParam : "booking.html";
+  const next = nextParam && /^[a-z0-9_-]+\.html$/i.test(nextParam) ? nextParam : (form.dataset.next || "booking.html");
 
   if (!A.configured) document.getElementById("config-note").hidden = false;
 
