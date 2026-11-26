@@ -60,3 +60,40 @@
     });
   });
 })();
+
+// Installable web app: service worker and "Install app" button.
+(function () {
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    });
+  }
+
+  const menu = document.getElementById("menu");
+  let deferred = null;
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if (!menu || standalone) return;
+
+  const btn = document.createElement("a");
+  btn.href = "#";
+  btn.id = "install-app";
+  btn.className = "btn btn-small";
+  btn.textContent = "Install app";
+  btn.hidden = true;
+  menu.appendChild(btn);
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferred = e;
+    btn.hidden = false;
+  });
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (!deferred) return;
+    deferred.prompt();
+    await deferred.userChoice.catch(() => {});
+    deferred = null;
+    btn.hidden = true;
+  });
+  window.addEventListener("appinstalled", () => { btn.hidden = true; });
+})();
